@@ -1,0 +1,13 @@
+.select{
+    background-color: rgb(172, 136, 231) !important;
+}
+body{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+@media screen and (max-width: 960px) {
+   .p{
+       margin-left: 2px;
+   }
+}

@@ -1,0 +1,41 @@
+<form (ngSubmit)="onAddStory()" style="margin-right:100px ; margin-top: 20px; float: right;">
+    <div class="card  " style="width:200px; height: 200px; align-items: center;" >
+        <img *ngIf="!url" class="card-img-top " src="assets/face.jpg" alt="Card image">
+        <img *ngIf="url" class="card-img-top " src="{{urlim}}{{url}}" alt="Card image">
+        <input #inputfile style="display: none;"  type="file" accept="image/*"  (change)="onloadfile($event)"  >
+        <div class="centered"><button type="button" (click)="inputfile.click()" style="width: 100%;" class="btn btn-primary" ><i class="fas fa-plus"></i></button> </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Add Story</button>
+        
+      </div> <br> <br>
+
+</form>
+
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+
+
+
+ 

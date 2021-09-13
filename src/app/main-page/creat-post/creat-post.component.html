@@ -1,0 +1,30 @@
+
+<div class="or align-items-center justify-content-center p-grid " style="justify-content: center !important;">
+
+    <form style="max-width: 500px; min-width: 300px; margin-left: 100px;" (ngSubmit)="onpublish()" [formGroup]="post" class="formPost"> 
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+          <textarea class="form-control"
+           style="max-height: 200px;
+           min-height: 200px
+           ; "
+            id="form4Example3" rows="4"
+             placeholder="What think about it 🤔!"
+             name="post"
+             formControlName="post"></textarea>
+            </div>
+    
+            <div class="form-outline mb-4">
+                <input #inputfile style="display: none;" type="file"  (change)="onloadfile($event)" accept="image/*" name='files[]' multiple>
+               
+                <button (click)="inputfile.click()"  type="button" class="btn btn-success">Pick file</button>
+                <span *ngIf="namefile" > ||  {{namefile}}</span>
+               <!-- <button type="button" (click)="upload()">send</button>-->
+            </div>
+       
+        <!-- Submit button -->
+        <div class="p-fluid">
+        <button type="submit"   class="btn btn-success container">publishing</button>
+      </div>
+      </form>
+</div>

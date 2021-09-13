@@ -1,0 +1,112 @@
+body {
+    background-color: #eee;
+    font-family: 'Merriweather', seri;
+    font-weight: 300
+    
+}
+
+.card {
+    border: solid 0.1px rgb(219, 216, 216);
+}
+
+.ellipsis {
+    color: #a09c9c
+}
+
+hr {
+    color: #a09c9c;
+    margin-top: 4px;
+    margin-bottom: 8px
+}
+
+.muted-color {
+    color: #a09c9c;
+    font-size: 13px
+}
+
+.ellipsis i {
+    margin-top: 3px;
+    cursor: pointer
+}
+
+.icons i {
+    font-size: 25px
+}
+
+.icons .fa-heart {
+    color: red
+}
+
+.icons .fa-smile-o {
+    color: yellow;
+    font-size: 29px
+}
+
+.rounded-image {
+    border-radius: 50% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px
+}
+
+.name {
+    font-weight: 600
+}
+
+.comment-text {
+    font-size: 12px
+}
+
+.status small {
+    margin-right: 10px;
+    color: blue
+}
+
+.form-control {
+    height: 45px;
+    border-radius: 26px
+}
+
+/*.comment-input {
+    position: relative
+}*/
+
+.fonts {
+    position: absolute;
+    right: 13px;
+    top: 15px;
+    color: #a09c9c
+}
+.sendComment{
+    color: #343a40;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #dfdfdf;
+    border-color: #8bbafe;
+    outline: 0;
+    box-shadow: none
+}
+
+@media screen and (max-width: 400px) {
+    #coverimg{
+     max-width: 300px;
+    }
+ }
+ @media screen and (min-width: 401px) and ( max-width: 600px) {
+    #coverimg{
+     max-width: 400px;
+    }
+ }
+ @media screen and (min-width: 601px) and ( max-width: 800px) {
+    #coverimg{
+     max-width: 600px;
+    }
+ }
+ @media screen and (min-width: 801px) and ( max-width: 1000px) {
+    #coverimg{
+     max-width: 800px;
+    }
+ }

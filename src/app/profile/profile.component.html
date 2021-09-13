@@ -1,0 +1,98 @@
+<body style="background-color: whitesmoke;">
+  
+
+<br>
+<!-- background-image: url('assets/q.jpg') -->
+ <div style="position: relative; text-align: center;">
+ <img id="coverimg" src="assets/R.jpg" alt="cover" style="size: 100%; height:250px; width: 1150px; "> 
+    <p style="text-align: center;">   <img *ngIf="!url"
+         class="img-fluid" 
+         src="assets/face.jpg" 
+         alt="Chania" 
+         width="150" 
+         height="100"
+         style="border-radius: 50%;
+                position: absolute;
+                top: 90%;
+                left: 50%;
+                transform: translate(-50%, -50%);"> </p>
+        <img *ngIf="url"
+         class="img-fluid" 
+          src="{{urlim}}{{url}}" 
+         alt="Chania" 
+         width="150px" 
+         height="100px"
+         style="border-radius: 50%;
+               position: absolute;
+                top: 90%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: white 5px solid;
+          "> 
+          <button (click)="edituser.click()"  type="button" class="btn btn-primary" style=" position: absolute;bottom: 0px; right:8%; font-size: 18px;"
+          ngbPopover="Edit User " triggers="mouseenter:mouseleave" ><i class="fas fa-cog"></i></button>
+          </div>
+       
+            <br> <br>
+
+
+
+<h1  style="font-family: 'Signika', sans-serif; text-align: center; ">{{name}}</h1>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit User!!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   
+    <form (ngSubmit)="onSubmit()" [formGroup]="Edituserform" >
+         
+      <div class="row mb-4">
+        <div class="col">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1">First name <span class="req">*</span></label>
+            <input type="text" id="form3Example1" class="form-control" placeholder="Enter Your First Name" name="firstname"
+              formControlName="firstname" />
+           
+          </div>
+    
+        </div>
+        <div class="col">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example2">Last name <span class="req">*</span></label>
+            <input type="text" id="form3Example2" class="form-control" placeholder="Enter Your Last Name" name="lastname"
+              formControlName="lastname" />
+           
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align: center; ">
+        <label class="form-label" for="form3Example3">Age <span class="req">*</span></label>
+        <input style="width: 370px; margin: auto; text-align: center;" type="number" id="form3Example3" class="form-control" placeholder="Enter Your Age" name="age"
+          formControlName="age" />
+        
+      </div>
+    
+    
+             <input #inputfile style="display: none;" type="file" accept="image/*"  (change)="onloadfile($event)" >
+              <button (click)="inputfile.click()"  
+                      type="button" 
+                      accept="image/*"  
+                      class="btn btn-success" 
+                      style="margin: 10px;"
+                      ngbPopover="Choose image " triggers="mouseenter:mouseleave" ><i class="fa fa-camera" aria-hidden="true"></i></button>
+         <button class="btn btn-success" (click)="modal.close('Close click')"  type="submit" >Edit</button>
+        <button style="position: absolute; right: 3%;" type="button"  class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </form>
+  </div>
+</ng-template>
+
+<button #edituser style="display: none;" class="btn btn-outline-primary mb-2 mr-2" (click)="openLg(content)">Large modal</button>
+
+<app-post></app-post>
+</body>

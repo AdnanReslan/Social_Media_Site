@@ -1,0 +1,246 @@
+<body style=" background-color: whitesmoke;">
+  
+
+<div style="text-align: center;" *ngIf="prvatepost.length < 1 && !isloading"> No Post </div>
+
+<ng-template #contenttt let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Friend List</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4 *ngIf="friendsArr.length<1">No Friends</h4>
+    <div  class="d-flex flex-row mb-2" *ngFor="let user of friendsArr" > 
+      <img *ngIf="!user.imgurl" src="assets/face.jpg" width="40" style="border-radius: 18px;" class="rounded-image">
+      <img *ngIf="user.imgurl" src="{{urlim}}{{user.imgurl}}" width="40" style="border-radius: 18px;" class="rounded-image">
+      <span  > 
+          <a style="cursor: pointer; color: black; text-decoration: none; " [routerLink]="['/profile',user.name,user.iduser]" (click)="modal.close('Close click')">  <h5 style="margin-left: 5px;" class="name" >{{user.name}}</h5> </a>
+      </span>
+      <button ngbPopover="Delete Friend" triggers="mouseenter:mouseleave" (click)="ondeletefriend(user.iduser)"  class="btn btn-primary" style="position:absolute; left: 76%;"><i class="fas fa-times-circle" ></i></button>
+
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+<button style="display: none;" #openshowfrienf class="btn btn-outline-primary mb-2 mr-2" (click)="openSm(contenttt)">Small modal</button>
+
+
+<div  id="friendBox" >
+  <div style="margin: 10px;">
+  <h3>Friends: {{friendscount}} </h3> <a style="cursor: pointer;" (click)="openshowfrienf.click()">show All</a><div ngbDropdown class="dropdown" style="display: inline;" >
+    <button   type="button" class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-cog"></i></button>
+   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+    <button (click)="onFriendPrivacy('PUBLIC')" ngbDropdownItem  style="cursor: pointer;" ><i style="color: blue;" class="fa fa-globe" aria-hidden="true"></i> Public</button>
+    <button (click)="onFriendPrivacy('FRIENDS')" ngbDropdownItem  style="cursor: pointer;" ><i style="color: orange;" class="fa fa-users" aria-hidden="true"></i> Friends</button>
+    <button (click)="onFriendPrivacy('PRIVATE')" ngbDropdownItem  style="cursor: pointer;" ><i style="color: red;" class="fa fa-lock" aria-hidden="true"></i> Private</button>
+   </div>
+  </div>
+  <br> <br>
+<div class="card-deck" style="width: 300px;" >
+<div *ngFor="let userfriend of friendsArr; let  i= index">
+   <div style="width: 120px !important;" class="card bg-light" *ngIf="i<2">
+     <div class="card-body text-center" >
+       <img *ngIf="!userfriend.imgurl" class="card-img-top" src="assets/face.jpg" alt="Card image">
+       <img *ngIf="userfriend.imgurl" class="card-img-top" src="{{urlim}}{{userfriend.imgurl}}" alt="Card image">
+       <a style="text-decoration: none; color: black;" [routerLink]="['/profile',userfriend.name,userfriend.iduser]" class="card-text">{{userfriend.name}}</a>
+     </div>
+   </div>
+  </div> 
+ </div>
+</div>
+</div>
+
+
+<br> 
+
+<div *ngIf="prvatepost.length >= 1 !isloading"> 
+<div  class="postShow container mt-5 mb-5" *ngFor="let post of  prvatepost"   >
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">The Comments : </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <h5 style="text-align: center;" *ngIf="commentarr.length<1">No Comment</h5>
+      <div class="comments"  style="margin: 3px;" >
+        <div class="d-flex flex-row mb-2" *ngFor="let comment of commentarr" > 
+         
+          <div > 
+            <img *ngIf="!comment.imageauther" src="assets/face.jpg" width="40" style="border-radius: 18px;" class="rounded-image">
+            <img *ngIf="comment.imageauther" src="{{urlim}}{{comment.imageauther}}" width="40" style="border-radius: 18px;" class="rounded-image">
+                <span style="margin: 5px;" class="name">{{comment.name}}</span> 
+                <div class="comment-text" style="margin-left:48px;">{{comment.content}}</div>
+                <div style="margin-left:48px;" class="picsum-img-wrapper" *ngIf="comment.fileUrl" >
+                  <img class="imge" src="{{urlim}}{{comment.fileUrl}}" >
+                </div>
+            </div>
+           
+            <div ngbDropdown class="d-inline-block" *ngIf="comment.idauther==myid" style="position:absolute; left: 76%;">
+              <button class="btn" id="dropdownBasic1" ngbDropdownToggle></button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a ngbDropdownItem (click)="onloadcooment(comment.idcomment)" style="cursor: pointer;"  ><i class="fas fa-edit" style="color: yellow;"></i> Edit</a>
+                <a class="dropdown-item"  (click)=" onDeletecomment(comment.idcomment)" style="cursor: pointer;" ><i class="fas fa-trash-alt"  style="color: red;"></i> Delete</a>
+              </div>
+              </div>
+        </div>
+      </div>
+
+
+
+      <form   (ngSubmit)="sendcomment(post.id )"  [formGroup]="comment" >
+        <input   #inputfile style="display: none;" type="file"   (change)="onloadfile($event)" >
+            <input  type="text" 
+            class="form-control" 
+            name="comment" 
+            formControlName="comments" 
+            style="margin: 5px;"
+            [ngModel]="customcomment">
+            <button (click)="inputfile.click()"  type="button"  class="btn btn-success">Pick file</button>
+          <button  [disabled]="!comment.valid" class="btn btn-success"  type="submit">{{ editMode ? 'Update' : 'Add'}}</button>
+          <button style="position: absolute; right: 3%;" type="button"  class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <button class="btn btn-outline-primary mb-2 mr-2" 
+  (click)="openLg(content)" 
+  (click)="getcommentforpost(post.id)"
+  #Comment
+  style="display: none;" >Large modal</button>
+
+  <ng-template #contentt let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Post!!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     
+      <form  (ngSubmit)="oneditpost(post.id)" [formGroup]="editpostform">
+        <textarea class="form-control"
+        style="max-height: 200px;
+               min-height: 200px; 
+               margin: 5px;"
+               id="form4Example3" 
+               rows="4"
+               name="editpost"
+               formControlName="editPost"
+               [ngModel]="oldpost"></textarea>
+               <input #inputfile 
+                       style="display: none;" 
+                       type="file" 
+                       (change)="onloadfiles($event)" 
+                       accept="image/*"
+                       name='files[]' multiple>
+                <button (click)="inputfile.click()"  
+                         type="button" accept="image/*"  
+                         class="btn btn-success">Pick file</button>
+                <button class="btn btn-success" 
+                       (click)="modal.close('Close click')"  
+                        type="submit" >Edit</button>
+                <button style="position: absolute; right: 3%;" 
+                        type="button"  
+                        class="btn btn-light" 
+                       (click)="modal.close('Close click')">Close</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <button class="btn btn-outline-primary mb-2 mr-2" 
+  (click)="openLgedit(contentt)" 
+  #editpost 
+  style="display: none;">Large modal2</button>
+
+ 
+  <div class="row d-flex align-items-center justify-content-center" style="max-width:600; background-color: whitesmoke; "  >
+      <div class="col-md-6">
+          <div class="card">
+
+              <div class="d-flex justify-content-between p-2 px-3">
+
+                  <div class="d-flex flex-row align-items-center"> 
+                      <img *ngIf="!post.imageauthor" src="assets/face.jpg" width="50" class="rounded-circle">
+                      <img *ngIf="post.imageauthor"src="{{urlim}}{{post.imageauthor}}" width="50" class="rounded-circle">
+                      <div class="d-flex flex-column ml-2"> 
+                          <a  [routerLink]="['/profile',post.authorName,post.authorId]" class="font-weight-bold" style="font-family: 'Roboto', sans-serif; cursor: pointer;">{{name}}</a> </div>
+                  </div>
+                
+                  <div ngbDropdown class="dropdown" >
+                    <button type="button" class="btn  " id="dropdownBasic1" ngbDropdownToggle> </button>
+                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <a ngbDropdownItem (click)="editpost.click()"  (click)=loadpost(post.contant) style="cursor: pointer;" ><i class="fas fa-edit" style="color: yellow;"></i> Edit</a>
+                    <a ngbDropdownItem  (click)="onDeletePost(post.id)" style="cursor: pointer;" ><i class="fas fa-trash-alt"  style="color: red;"></i> Delete</a>
+                   </div>
+                  </div>
+  
+              </div> 
+
+
+
+              <div class="p-2">
+                  <p class="text text-justify" style="font-family: 'Roboto', sans-serif;">{{post.contant}} </p>
+                  <img *ngIf="post.filesUrl.length==1" src="{{urlim}}{{post.filesUrl[0]}}" class="d-block w-100 resize" >
+                  <ngb-carousel #carousel [interval]="0"  slide="pause()"  *ngIf="post.filesUrl[1]">
+                    <ng-template ngbSlide *ngFor="let img of post.filesUrl; index as i">
+                      <!-- <div class="carousel-caption">
+                        <h3>My slide {{i + 1}} title</h3>
+                      </div> -->
+                        <div class="picsum-img-wrapper" *ngIf="post.filesUrl[0]">
+                          <img class="d-block w-100 resize" src="{{urlim}}{{post.filesUrl[i]}}"  >
+                        </div>
+                    </ng-template>
+                  </ngb-carousel>
+
+                  <hr>  
+
+                  <div class="d-flex justify-content-between align-items-center">
+
+                      <div class="d-flex flex-row icons d-flex align-items-center"> 
+                        <i (click)="onlovepost(post.id)" style="color: red ;" class="far fa-heart" *ngIf="!(post.myReaction=='LOVE')"></i>
+                        <i (click)="onlovepost(post.id)" style="color: red ;" class="fas fa-heart"  *ngIf="post.myReaction=='LOVE'"></i>
+                        <i class="fa fa-smile-o ml-2"></i> 
+
+                        <i (click)="onlikepost(post.id)" class="far fa-thumbs-up" style="color: blue;" *ngIf="!(post.myReaction=='LIKE')"></i>
+                        <i (click)="onlikepost(post.id)" class="fas fa-thumbs-up" style="color: blue;" *ngIf="post.myReaction=='LIKE'"></i>
+                        <i class="fa fa-smile-o ml-2"></i>
+
+                        <i (click)="ondislikepost(post.id)" class="far fa-thumbs-down" style="color: black;" *ngIf="!(post.myReaction=='DISLIKE')"></i>
+                        <i (click)="ondislikepost(post.id)" class="fas fa-thumbs-down" style="color: black;"*ngIf="post.myReaction=='DISLIKE'"></i>
+                        <i class="fa fa-smile-o ml-2"></i>
+                        <span> {{post.likesCount + post.loveCount + post.disLikesCount }}  </span>
+                    </div>
+                    
+                      <div class="d-flex flex-row muted-color"> <span > 
+                      <a (click)="Comment.click()" style="cursor: pointer;">comments</a> </span> </div>
+
+                  </div>
+                  <hr>
+     </div> 
+    </div>
+   </div>
+  </div>
+
+ </div>
+</div>
+
+
+</body>
+
+<div *ngIf="isloading" style="text-align: center;" class="spinner-border text-primary"></div>
+<br>
+
+
+
+
+
+ <br> <br>
+  

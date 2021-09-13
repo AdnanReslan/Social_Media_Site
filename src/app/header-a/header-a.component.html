@@ -1,0 +1,210 @@
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin: 0; ">
+    <a class="navbar-brand"  *ngIf="Islogin && !url "><img src="assets/face.jpg" alt="Logo" style="width:40px; border-radius: 50%;"></a>
+    <a class="navbar-brand"  *ngIf="Islogin && url"><img src="{{urlim}}{{url}}" alt="Logo" style="width:40px; border-radius: 50%;"></a>
+    <a class="navbar-brand"  *ngIf="!Islogin"><img src="assets/logo.jpg" alt="Logo" style="width:40px; border-radius: 50%;"></a>
+    <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navb" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="navbar-collapse collapse" id="navb" >
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item " routerLinkActive="active" *ngIf="!Islogin">
+        <button class="btn btn-dark p" style="padding: 0px;">  <a class="nav-link" routerLink="/signup"><i class="fa fa-user-plus" ></i></a> </button>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="!Islogin">
+          <button class="btn btn-dark p" style="padding: 0px;"> <a class="nav-link" routerLink="/login"><i class="fas fa-sign-in-alt"></i></a> </button>
+        </li>
+        <li class="nav-item " routerLinkActive="active" *ngIf="Islogin">
+          <button class="btn btn-dark p" style="padding: 0px;">   <a class="nav-link" routerLink="/myprofile"><i class="fa fa-user"></i></a> </button>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="Islogin">
+          <button class="btn btn-dark p" style="padding: 0px;"> <a class="nav-link" routerLink="/main-page"><i class="fa fa-home fa-lg"></i></a> </button>
+        </li>
+      
+        <div class="dropdown" *ngIf="Islogin">
+          <button type="button" class="btn  " data-toggle="dropdown">
+            <i class="far fa-bell" style="color: white !important;"></i>
+          </button>
+          <ul class="dropdown-menu">
+           <div> <li *ngIf="NotifictionsArr.length==0">  There are no notices.   </li> </div>
+            <div *ngFor="let notifi of NotifictionsArr ; let i = index "><li *ngIf="i<9" class="dropdown-item" >  
+              <img *ngIf="!notifi.imageurl" src="assets/face.jpg" width="40" style="border-radius: 18px; margin: 3px;" class="rounded-image">
+              <img *ngIf="notifi.imageurl" src="{{urlim}}{{notifi.imageurl}}" width="40" style="border-radius: 18px; margin: 3px;" class="rounded-image">
+              {{notifi.lable}}</li></div>
+          </ul>
+        </div>
+  
+        <div ngbDropdown class="dropdown" *ngIf="Islogin" >
+          <button type="button" class="btn  " id="dropdownBasic1" ngbDropdownToggle> <i style="color: white !important;" class="fas fa-bars"></i></button>
+         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <a ngbDropdownItem  style="cursor: pointer;" (click)="ShowRequstFriend.click()"><i class="fas fa-user-friends"></i> show Friend Requst</a>
+          <a ngbDropdownItem (click)="resetpassword.click()" style="cursor: pointer;"><i class="fas fa-lock" style="color: blue;"></i> Reset password</a>
+          <a ngbDropdownItem (click)="onlogout()" style="cursor: pointer;"><i class="fas fa-sign-in-alt"></i> Logout</a>
+         </div>
+        </div>
+
+      
+  
+      </ul>
+
+      <form (ngSubmit)="onSearch()" [formGroup]="Search" *ngIf="Islogin" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" formControlName="search">
+        <button class="btn btn-success my-2 my-sm-0" type="submit" (click)="ShowResultSearch.click()" >Search</button>
+      </form>
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">Search Result : </h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 style="text-align: center;" *ngIf="UserSearchArr.length<1">Not Found</h5>
+          <div class="d-flex flex-row mb-2" *ngFor="let user of UserSearchArr" > 
+            
+            <img *ngIf="!user.imgurl" src="assets/face.jpg" width="40" style="border-radius: 18px;" class="rounded-image">
+            <img *ngIf="user.imgurl" src="{{urlim}}{{user.imgurl}}" width="40" style="border-radius: 18px;" class="rounded-image">
+            <div class="d-flex flex-column ml-2" > 
+                <a style="cursor: pointer; color: black; text-decoration: none; " [routerLink]="['/profile',user.name,user.iduser]" (click)="modal.close('Close click')">  <h5 class="name" >{{user.name}}</h5> </a>
+              </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+      </ng-template>
+
+      <button #ShowResultSearch style="display: none;"  class="btn btn-outline-primary mb-2 mr-2" (click)="openSm(content)">Large modal</button>
+
+
+      <ng-template #contentt let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">Friends Requsts </h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="d-flex flex-row mb-2" *ngFor="let user of Userreqme" > 
+            <img *ngIf="!user.imgurl" src="assets/face.jpg" width="40" style="border-radius: 18px;" class="rounded-image">
+            <img *ngIf="user.imgurl" src="{{urlim}}{{user.imgurl}}" width="40" style="border-radius: 18px;" class="rounded-image">
+            <span  > 
+                <a style="cursor: pointer; color: black; text-decoration: none; " [routerLink]="['/profile',user.name,user.iduser]" (click)="modal.close('Close click')">  <h5 style="margin-left: 5px;" class="name" >{{user.name}}</h5> </a>
+            </span>
+            <div ngbDropdown class="dropdown" style="position:absolute; left: 76%;">
+              <button  type="button" class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-paper-plane" ></i> </button>
+             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="onacceptfriendrequst(user.iduser)"><i class="fas fa-user-check"></i> Accept Request</button>
+                  <button ngbDropdownItem (click)="ondeletereqformsomeone(user.iduser)"><i class="fas fa-user-minus"></i> Delete Request</button>
+             </div>
+            </div>
+        </div>
+
+     
+        <div class="d-flex flex-row mb-2" *ngFor="let user of UserIreq" > 
+          <img *ngIf="!user.imgurl" src="assets/face.jpg" width="40" style="border-radius: 18px;" class="rounded-image">
+          <img *ngIf="user.imgurl" src="{{urlim}}{{user.imgurl}}" width="40" style="border-radius: 18px;" class="rounded-image">
+          <span class="d-flex flex-column ml-2" > 
+              <a style="cursor: pointer; color: black; text-decoration: none; " [routerLink]="['/profile',user.name,user.iduser]" (click)="modal.close('Close click')">  <h5 style="margin-left: 5px;" class="name" >{{user.name}}</h5> </a>
+          </span>
+          <button (click)="ondeleterequstfriend(user.iduser)"  class="btn btn-primary" style="position:absolute; left: 76%;"><i class="fas fa-times-circle" ></i></button>
+      </div>
+      <div *ngIf="(Userreqme.length<1 && UserIreq.length<1)">No Friend Requst </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </div>
+      </ng-template>
+
+      <button #ShowRequstFriend style="display: none;"  class="btn btn-outline-primary mb-2 mr-2" (click)="openSm(contentt)">Large modal</button>
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Button to Open the Modal -->
+      <button #resetpassword style="display: none;" type="button" class="btn " data-toggle="modal" data-target="#myModal">
+        Open modal
+      </button>
+      
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Reset Password</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <form  (ngSubmit)="onresetpassword()" #f="ngForm">
+            <div class="modal-body">
+              <div class="form-outline mb-4">
+               <label class="form-label" for="form2Example2">Old Password</label>
+               <input type="password" 
+                      id="form2Example2" 
+                      class="form-control" 
+                      name="oldpassword"
+                      ngModel
+                      required/>
+               </div>  
+               <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">New Password</label>
+                <input type="password" 
+                       id="form2Example2" 
+                       class="form-control" 
+                       name="newpassword"
+                       ngModel
+                       required/>
+                </div>  
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" >Reset</button>
+            </div>
+          </form>
+           
+              
+         
+      
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <p-toast></p-toast>
+  <p-toast position="top-left" key="tl"></p-toast>
+  <p-toast position="top-center" key="tc"></p-toast>
+  <p-toast position="bottom-center" key="bc"></p-toast>
+  
+  <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+      <ng-template let-message pTemplate="message">
+          <div class="p-flex p-flex-column" style="flex: 1">
+              <div class="p-text-center">
+                  <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                  <h4>{{message.summary}}</h4>
+                  <p>{{message.detail}}</p>
+              </div>
+              <div class="p-grid p-fluid">
+                  <div class="p-col-6">
+                      <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                  </div>
+                  <div class="p-col-6">
+                      <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-toast>

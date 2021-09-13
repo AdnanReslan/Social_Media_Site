@@ -1,0 +1,27 @@
+.resize {
+    width: 200px;
+    height : auto;
+    }
+    
+    .resize {
+    width: auto;
+    height : 300px;
+    }
+    .btn{
+        margin: 5px !important;
+    }
+    .imge {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 150px;
+        margin: 99;
+      }
+      #friendBox{
+        position: absolute;
+        width: 300px;
+        margin-left: 30px; 
+        border: white 2px solid; 
+        border-radius: 8px; 
+        background-color: white !important;
+      }

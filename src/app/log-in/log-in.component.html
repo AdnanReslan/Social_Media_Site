@@ -1,0 +1,93 @@
+
+<body style="background-image: url('assets/q.jpg'); height: 625px;  margin-left: 0px !important; " class="container-fluid" >
+  <br> <br> <br>
+<h1 style="font-family: 'Roboto', sans-serif; justify-content: center; text-align: center;" class="imgtext" >Say Hay </h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <p-messages [(value)]="msgs2" [enableService]="false" *ngIf="errorForm"></p-messages>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <p-messages [(value)]="msgs1" [enableService]="false" *ngIf="error"></p-messages>
+
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+<br>
+<div class="p-grid">
+<form style="max-width: 450px; margin: 20px auto;" (ngSubmit)="oncreataccount()" [formGroup]="loggin">
+   
+  
+   
+      <div class="p-fluid" >
+
+          <div class="p-field" style="margin-bottom: 25px;" >
+            <span class="p-float-label">
+              <input id="float-input" type="text" pInputText  name="email"
+              formControlName="email"  > 
+              <label for="float-input">Email address</label>
+          </span>
+          </div>
+
+          <div class="p-field" style="margin-bottom: 25px;"  >
+            <span class="p-float-label">
+             
+             <p-password id="form2Example2" [feedback]="false"   name="password"
+              formControlName="password"   > </p-password>
+              <label for="form2Example2">Password</label>
+          </span>
+          </div>
+
+      </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-success btn-block mb-4" >Log in</button>
+  </form>
+</div>
+  <br> <br> <br>
+  <p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+</body>
+
+    
+
+    
+
+ 
+  
+  
+    
+    
+    

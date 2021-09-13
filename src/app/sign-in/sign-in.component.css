@@ -1,0 +1,36 @@
+input.ng-invalid.ng-touched{
+    border: 2px solid red ;
+}
+.req{
+    color: red;
+}
+
+body{
+    font-family: 'Ubuntu', sans-serif;
+  
+}
+button {
+    min-width: 10rem;
+    margin-right: .5rem;
+}
+
+@media screen and (max-width: 960px) {
+    button {
+        width: 100%;
+        margin-bottom: .5rem;
+    }
+}
+button{margin-top: 10px;}
+input.ng-invalid.ng-touched{
+    border: 2px solid red ;
+}
+.imgtext{
+    color: transparent;
+    background: url(logo.jpg);
+    -webkit-background-clip: text;
+    background-size: 100%;
+  
+}
+
+
+

@@ -1,0 +1,108 @@
+<body style="background-image: url('assets/q.jpg'); height: 625px;  margin-left: 0px !important; " class="container-fluid" >
+  <br>
+<h1 style="font-family: 'Roboto', sans-serif; justify-content: center; text-align: center;" class="imgtext" >Sign up in Say Hay </h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <p-messages [(value)]="msgs2" [enableService]="false" *ngIf="errorForm"></p-messages>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <p-messages [(value)]="msgs1" [enableService]="false" *ngIf="error"></p-messages>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+
+<form style="max-width: 450px; margin: auto;  " (ngSubmit)="oncreataccount()" [formGroup]="signup" >
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <label class="form-label" for="form3Example1">First name <span class="req">*</span></label>
+        <input type="text" id="form3Example1" class="form-control" placeholder="Enter Your First Name" name="firstname"
+          formControlName="firstname" />
+        <span *ngIf="!signup.controls.firstname.valid && signup.controls.firstname.touched">
+          <span *ngIf="signup.controls.firstname.hasError('required')">First name required </span>
+        </span>
+      </div>
+
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <label class="form-label" for="form3Example2">Last name <span class="req">*</span></label>
+        <input type="text" id="form3Example2" class="form-control" placeholder="Enter Your Last Name" name="lastname"
+          formControlName="lastname" />
+        <span *ngIf="!signup.controls.lastname.valid && signup.controls.lastname.touched">
+          <span *ngIf="signup.controls.lastname.hasError('required')">First name required </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form3Example3">Age <span class="req">*</span></label>
+    <input type="number" id="form3Example3" class="form-control" placeholder="Enter Your Age" name="age"
+      formControlName="age" />
+    <span *ngIf="!signup.controls.age.valid && signup.controls.age.touched">
+      <span *ngIf="signup.controls.age.hasError('max')">Age must be bettwen 96 - 11 </span>
+      <span *ngIf="signup.controls.age.hasError('min')">Age must be bettwen 96 - 11 </span>
+      <span *ngIf="signup.controls.age.hasError('required')">Age required </span>
+    </span>
+  </div>
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form3Example3">Email address <span class="req">*</span></label>
+    <input type="email" id="form3Example3" class="form-control" placeholder="Enter Your Email Address" name="email"
+      formControlName="email" />
+    <span *ngIf="!signup.controls.email.valid && signup.controls.email.touched">
+      <span *ngIf="signup.controls.email.hasError('email')">email not valid </span>
+      <span *ngIf="signup.controls.email.hasError('required')">email required </span>
+    </span>
+  </div>
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form3Example4">Password <span class="req">*</span></label>
+    <input type="password" id="form3Example4" class="form-control" placeholder="Enter Your Password" name="password"
+      formControlName="password" />
+    <span *ngIf="!signup.controls.password.valid && signup.controls.password.touched">
+      <span *ngIf="signup.controls.password.hasError('minlength')">password must be bigger </span>
+      <span *ngIf="signup.controls.password.hasError('required')">password required </span>
+    </span>
+  </div>
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-success btn-block mb-4">Sign up</button>
+</form>
+<br> <br> <br>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+</body>
